@@ -1,0 +1,392 @@
+@import 'grid.less';
+@import 'css/font/Roboto/stylesheet.css';
+
+@loadingGif: '../img/loading.gif';
+
+@unit: 16px;
+@maxWidth: 52 * @unit;
+@logoSize: 12 * @unit;
+@nMenus: 5;
+
+@columns: 30;
+@column-width: @unit;
+@gutter-width: 0px;
+
+@yellow: #EEEE55;
+@darkGrey: #222222;
+@lightGrey: #DDDDDD;
+@medGrey: (@lightGrey - @darkGrey) / 2 + @darkGrey;
+
+.roboto {
+	font-family: "RobotoRegular", "Roboto", "Helvetica-Neue", sans-serif, Arial;
+	font-weight: normal;
+}
+.robotoLight {
+	font-family: "RobotoLight", "Roboto Light", "Roboto", "Helvetica-Neue", sans-serif, Arial;
+}
+.robotoBold {
+	font-family: "RobotoBold", "Roboto Bold", "Roboto", "Helvetica-Neue", sans-serif, Arial;
+}
+.marked {
+	color: @yellow;
+	text-shadow: 0 1px #000000;
+}
+.noselect {
+	-webkit-user-select: none;
+	-moz-user-select: -moz-none;
+	-o-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.clear {
+	clear: both;
+}
+
+.transition (@property: all, @duration: 1s, @easing: ease, @delay: 0s) {
+	-webkit-transition: @arguments;
+	-moz-transition: @arguments;
+	-o-transition: @arguments;
+	-ms-transition: @arguments;
+	transition: @arguments;
+}
+.shadow (@offsetX: 0, @offsetY: 0, @blur: 0, @color, @inset) {
+	-webkit-box-shadow: @arguments;
+	-moz-box-shadow: @arguments;
+	-o-box-shadow: @arguments;
+	-ms-box-shadow: @arguments;
+	box-shadow: @arguments;
+}
+
+html {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	background-color: @lightGrey;
+	color: @darkGrey;
+	.roboto;
+	min-height: 100%;
+	-webkit-text-size-adjust: none;
+}
+
+a:link {
+	text-decoration: none;
+	.marked;
+	text-shadow: none;
+	border: none;
+	-webkit-tap-highlight-color: rgba(238,238,85,0.5);
+}
+a:visited {
+	color: @yellow;
+}
+a.button {
+	display: block;
+	float: right;
+	background-color: @yellow;
+	color: @darkGrey;
+	// text-shadow: 0 1px rgba(255,255,255,0.75);
+	padding: 4px 8px;
+	line-height: 1;
+	border: 1px solid @yellow !important;
+	outline: none !important;
+	text-transform: uppercase;
+	font-size: 1.2em;
+	margin: (@unit / 2) 0 0 @unit;
+	.noselect;
+
+	&.small {
+		background: none;
+		border-color: transparent !important;
+		.marked;
+		text-transform: none;
+	}
+
+	&:hover {
+		background-color: @darkGrey;
+		.marked;
+		border: 1px solid @yellow !important;
+	}
+}
+
+::-moz-selection {
+	color: @darkGrey;
+	background: @yellow;
+}
+::selection {
+	color: @darkGrey;
+	background: @yellow;
+}
+
+.nivoSlider {
+	position: relative;
+	background-image: url('@{loadingGif}') no-repeat center center;
+
+	img {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		display: none;
+	}
+	a {
+		border: 0 !important;
+		display: block;
+	}
+}
+
+#container {
+	width: @maxWidth;
+	margin: 0 auto;
+	min-height: 100%;
+
+	#userBar {
+		line-height: 1;
+		font-family: "Roboto";
+		font-weight: 400;
+		font-size: 14px;
+		.noselect;
+
+		a {
+			padding: @unit / 2;
+			display: block;
+			float: right;
+			color: @darkGrey;
+			text-shadow: none;
+			outline: none !important;
+
+			&:hover {
+				.marked;
+				background-color: @darkGrey;
+			}
+		}
+	}
+	header {
+		#logoBox {
+			width: @logoSize;
+			height: @logoSize;
+			//.column(12);
+			background-color: @lightGrey;
+			float: left;
+			.noselect;
+
+			a {
+				outline: none !important;
+				border: none !important;
+				display: block;
+				width: @logoSize;
+				height: @logoSize;
+				line-height: 1;
+				background: url('http://placekitten.com/g/@{logoSize}/@{logoSize}') no-repeat center center;
+			}
+		}
+		nav {
+			width: @maxWidth - @logoSize;
+			height: 3 * @unit;
+			margin: 0 0 0 @logoSize;
+			.noselect;
+
+			#nav {
+				height: 3 * @unit;
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+
+				.menu {
+					display: block;
+					float: left;
+					width: (@maxWidth - @logoSize) / @nMenus;
+					height: inherit !important;
+					color: @lightGrey;
+					overflow: hidden;
+
+					&:hover {
+						height: @logoSize !important;
+					}
+					
+					.navMenuTitle {
+						padding: 12px 0;
+						font-size: 24px;
+						background-color: @darkGrey;
+						.robotoLight;
+						text-align: center;
+						line-height: 1;
+						cursor: default;
+					}
+					.navMenu {
+						background-color: rgba(34,34,34,0.75);
+						width: inherit;
+						margin: 0;
+						padding: 0;
+						list-style-type: none;
+						height: 0;
+						position: absolute;
+						z-index: 10;
+						overflow: hidden;
+
+						.transition(height, 0.5s, cubic-bezier(0.19, 1, 0.22, 1), 0s);
+
+						li {
+							font-size: 16px;
+							padding: 0;
+							.roboto;
+
+							a {
+								color: @lightGrey;
+								display: block;
+								width: (@maxWidth - @logoSize) / @nMenus - 16px;
+								padding: 4px 8px;
+								line-height: 1;
+								outline: none !important;
+
+								&:hover {
+									.marked;
+									background-color: rgba(34,34,34,0.75);
+									text-decoration: none;
+								}
+							}
+						}
+					}
+
+					&:hover {
+						.navMenuTitle {
+							.marked;
+						}
+						.navMenu {
+							height: (@logoSize - 3 * @unit) !important;
+							//display: block;
+						}
+					}
+				} // .menu
+			} // #nav
+		} // nav
+		#pictureBox {
+			height: @logoSize - 3 * @unit;
+			width: @maxWidth - @logoSize;
+			margin-left: @logoSize;
+
+			img {
+				height: inherit;
+				width: inherit;
+				display: none;
+			}
+		}
+	} // #header
+
+	#section1 p {
+		font-size: 24px;
+	}
+
+	footer {
+		width: @maxWidth - 2 * @unit;
+		float: left;
+		background-color: @darkGrey;
+		color: @medGrey;
+		.roboto;
+		padding: @unit;
+		.noselect;
+
+		section {
+			float: left;
+			width: (@maxWidth - @unit) / 4 - @unit;
+			padding-left: @unit;
+
+			&:first-child {
+				padding-left: 0;
+			}
+
+			#logoImage {
+				display: block;
+				width: (@maxWidth - @unit) / 4 - @unit;
+				height: (@maxWidth - @unit) / 4 - @unit;
+				background: url('http://placekitten.com/g/192/192') no-repeat center center;
+				outline: none !important;
+			}
+
+			.listTitle {
+				border-bottom: 1px solid @medGrey;
+				text-transform: uppercase;
+				font-size: 18px;
+				.robotoLight;
+				padding-bottom: 4px;
+				margin-bottom: 4px;
+				cursor: default;
+			}
+
+			ul {
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+
+				a {
+					color: @medGrey;
+					outline: none !important;
+					.robotoLight;
+					font-size: 14px;
+
+					&:hover {
+						color: @yellow;
+					}
+				}
+			}
+		} // section
+
+		#copyright {
+			padding-top: @unit / 2;
+			border-top: 1px solid @medGrey;
+			margin: (@unit / 2) 0 0 @unit;
+			float: left;
+			width: 3 * (@maxWidth - @unit) / 4 - @unit;
+			font-size: 12px;
+			letter-spacing: 1px;
+			cursor: default;
+			.robotoLight;
+		}
+	} // #footer
+} // #container
+
+.box {
+	padding: @unit;
+	text-align: justify;
+
+	p {
+		margin: 0;
+	}
+}
+.dark {
+	background-color: @darkGrey;
+	color: @lightGrey;
+	.robotoLight;
+}
+
+.hbox {
+	div {
+		width: @maxWidth / 2 - @unit;
+		padding: @unit 0;
+		float: left;
+
+		h2 {
+			font-size: 24px;
+			font-weight: 400;
+			text-transform: uppercase;
+			margin: 0;
+			.robotoLight;
+		}
+		p {
+			margin: 0;
+			font-size: 18px;
+			.robotoLight;
+			line-height: 1.5;
+			text-align: justify;
+		}
+	}
+	.left {
+		padding-right: @unit;
+	}
+	.right {
+		padding-left: @unit;
+	}
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}

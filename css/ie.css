@@ -1,0 +1,9 @@
+#nav .navMenu {
+	background-color: #222222;
+}
+a:link {
+	border: none;
+}
+a.button {
+	border: 1px solid #EEEE55;
+}
